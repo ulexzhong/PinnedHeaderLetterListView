@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pinletter="http://schemas.android.com/apk/res/com.ulex.apps.pinnedheaderletterlistview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.ulex.apps.pinnedheaderletterlistview.lib.PinnedHeaderLetterListView
+        android:id="@+id/pinned_indicated_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@null"
+        android:cacheColorHint="@android:color/transparent"
+        pinletter:overlayTextColor="@android:color/holo_red_dark"
+        pinletter:overlayColor="@android:color/holo_blue_bright"
+        pinletter:alphaArrays="#ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+
+</RelativeLayout>

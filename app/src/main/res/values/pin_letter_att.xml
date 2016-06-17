@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="pin_letter_list_view">
+        <attr name="alphaTextColor" format="color"/>
+        <attr name="alphaTextSize" format="dimension"/>
+        <attr name="alphaBackgroundNormalColor" format="color"/>
+        <attr name="alphaBackgroundPressedColor" format="color"/>
+        <attr name="alphaPaddingLeft" format="dimension"/>
+        <attr name="alphaPaddingRight" format="dimension"/>
+        <attr name="alphaPaddingTop" format="dimension"/>
+        <attr name="alphaPaddingBottom" format="dimension"/>
+        <attr name="overlaySize" format="dimension"/>
+        <attr name="overlayColor" format="color"/>
+        <attr name="overlayTextSize" format="dimension"/>
+        <attr name="overlayTextColor" format="color"/>
+        <attr name="overlayRadius" format="dimension"/>
+        <attr name="alphaArrays" format="string"/>
+    </declare-styleable>
+</resources>
