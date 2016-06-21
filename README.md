@@ -1,14 +1,17 @@
 # PinnedHeaderLetterListView
 PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两个主要功能点，1、滑动时首字母会定在顶端，2、右侧有个字母列表，滑动这个列表时，显示选中的字母，同时将列表定位到相应的位置上
 
+##效果图
+![](https://github.com/ulexzhong/PinnedHeaderLetterListView/raw/master/app/pinLetterListViewPreview.gif)
+
 ##项目简介
 **lib**包为最终提供的公共库<br>
 **test**包为测试用例<br>
 其中lib里面引用了一个开源库相关代码[PinnedHeaderListView](https://github.com/JimiSmith/PinnedHeaderListView "PinnedHeaderListView"),这个开源库已经实现将列表title定在顶端的功能，具体介绍可前往查阅
 
 ##主要类介绍
-###PinnedHeaderLetterListView.java
-最终提供的组件，继承了PinnedHeaderListView，本质上就是一个ListView，只不过是在ListView的基础上添加了一下操作，在具体使用的时候，跟ListView基本一致<br>
+###PinnedHeaderLetterListView.java 
+[PinnedHeaderLetterListView.java](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/PinnedHeaderLetterListView.java)为最终提供的组件，继承了[PinnedHeaderListView](https://github.com/ulexzhong/PinnedHeaderLetterListView/tree/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/pinnedheaderlistview)，本质上就是一个ListView，只不过是在ListView的基础上添加了一下操作，在具体使用的时候，跟ListView基本一致<br>
    ```java
     private void initAttrs(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.pin_letter_list_view);
@@ -36,7 +39,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
 ```
 提供了一些可定制项，例如，选中后提示的字体大小、颜色、弹框的大小、颜色、右侧字母表的相关的定制，对于字母表的数据，用户可直接用alphaArrays指定，缺省值为Adapter里面获取
 ###PinLetterBaseAdapter.java
-继承了SectionedBaseAdapter,扩展了两个方法，用于获取用户滑动字母表时对应的字母在ListView中的postion，使用的时候不需要理会，只要继承这个PinLetterBaseAdapter实现自己的Adapter就可以了
+继承了[SectionedBaseAdapter](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/pinnedheaderlistview/SectionedBaseAdapter.java),扩展了两个方法，用于获取用户滑动字母表时对应的字母在ListView中的postion，使用的时候不需要理会，只要继承这个PinLetterBaseAdapter实现自己的Adapter就可以了
    ```java
    /**
      * for locate the position in the whole listview,
@@ -70,7 +73,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
         return getWholePosition(section);
     }
 ```
-###SectionAdapter.java
+###SectionBaseAdapter.java
 这个类是属于PinnedHeaderListView开源项目的，在BaseAdapter的基础上进行了扩展，将顶部和具体内容的itemView分离，让用户自行去实现相应的View
 ###entity
 这里对放进ListView的数据结构做了一些约束<br>
@@ -122,14 +125,15 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
 
 </RelativeLayout>
 ```
-####继承PinLetterBaseEntity.java、PinLetterBaseItemEntity.java实现相应的实体类
-####继承PinnedHeaderLetterListView实现Adapter类
-   ```java
-   public class ContactsListAdapter extends SectionedBaseAdapter {
-    private List<ContactsEntity> list;
+####编写实体类
+继承PinLetterBaseEntity.java、PinLetterBaseItemEntity.java实现相应的实体类
 
-    public ContactsListAdapter(List<ContactsEntity> list) {
-        this.list = list;
+####继承[PinLetterBaseAdapter](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/PinLetterBaseAdapter.java)实现Adapter类
+   ```java
+  public class ContactsPinLetterListAdapter extends PinLetterBaseAdapter {
+
+    public ContactsPinLetterListAdapter(List<ContactsPinLetterEntity> list) {
+        super(list);
     }
 
     @Override
@@ -149,7 +153,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
 
     @Override
     public int getCountForSection(int section) {
-        return list.get(section).getContactsItemEntityList().size();
+        return list.get(section).getItemEntityList().size();
     }
 
     @Override
@@ -162,7 +166,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
         } else {
             viewHolder = (ItemViewHolder) convertView.getTag();
         }
-        ContactsItemEntity entity = list.get(section).getContactsItemEntityList().get(position);
+        ContactsPinLetterItemEntity entity = (ContactsPinLetterItemEntity) list.get(section).getItemEntityList().get(position);
         viewHolder.render(entity.getName());
         return convertView;
     }
@@ -177,15 +181,14 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
         } else {
             viewHolder = (HeaderViewHolder) convertView.getTag();
         }
-        ContactsEntity entity = list.get(section);
-        viewHolder.render(entity.getTitle());
+        ContactsPinLetterEntity entity = (ContactsPinLetterEntity) list.get(section);
+        viewHolder.render(entity.getLetter());
         return convertView;
     }
-}
 ```
  ####最后
-    ```java
-     List<ContactsPinLetterEntity> list = ContactsPinLetterModel.getContactsList();
+ ```java
+    List<ContactsPinLetterEntity> list = ContactsPinLetterModel.getContactsList();
         ContactsPinLetterListAdapter listAdapter = new ContactsPinLetterListAdapter(list);
         TextView textView = new TextView(this);
         textView.setText("This is a headerView...");
@@ -193,7 +196,6 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
         textView.setLayoutParams(params);
         listView.addHeaderView(textView);
         listView.setAdapter(listAdapter);
-  ```
+        ```
  
-
 
