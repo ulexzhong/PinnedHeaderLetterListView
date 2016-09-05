@@ -12,8 +12,4 @@ public class ContactsPinLetterEntity extends PinLetterBaseEntity{
     public ContactsPinLetterEntity(String title, List<ContactsPinLetterItemEntity> itemEntityList) {
         super(title, itemEntityList);
     }
-
-    public List<ContactsPinLetterItemEntity> getItemEntityList() {
-        return (List<ContactsPinLetterItemEntity>) itemEntityList;
-    }
 }
