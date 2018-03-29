@@ -4,13 +4,13 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
 ##效果图
 ![](https://github.com/ulexzhong/PinnedHeaderLetterListView/raw/master/app/pinLetterListViewPreview.gif)
 
-##项目简介
+## 项目简介
 **lib**包为最终提供的公共库<br>
 **test**包为测试用例<br>
 其中lib里面引用了一个开源库相关代码[PinnedHeaderListView](https://github.com/JimiSmith/PinnedHeaderListView "PinnedHeaderListView"),这个开源库已经实现将列表title定在顶端的功能，具体介绍可前往查阅
 
-##主要类介绍
-###PinnedHeaderLetterListView.java 
+## 主要类介绍
+### PinnedHeaderLetterListView.java 
 [PinnedHeaderLetterListView.java](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/PinnedHeaderLetterListView.java)为最终提供的组件，继承了[PinnedHeaderListView](https://github.com/ulexzhong/PinnedHeaderLetterListView/tree/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/pinnedheaderlistview)，本质上就是一个ListView，只不过是在ListView的基础上添加了一下操作，在具体使用的时候，跟ListView基本一致<br>
    ```java
     private void initAttrs(AttributeSet attrs) {
@@ -38,7 +38,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
     }
 ```
 提供了一些可定制项，例如，选中后提示的字体大小、颜色、弹框的大小、颜色、右侧字母表的相关的定制，对于字母表的数据，用户可直接用alphaArrays指定，缺省值为Adapter里面获取
-###PinLetterBaseAdapter.java
+### PinLetterBaseAdapter.java
 继承了[SectionedBaseAdapter](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/pinnedheaderlistview/SectionedBaseAdapter.java),扩展了两个方法，用于获取用户滑动字母表时对应的字母在ListView中的postion，使用的时候不需要理会，只要继承这个PinLetterBaseAdapter实现自己的Adapter就可以了
    ```java
    /**
@@ -73,17 +73,17 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
         return getWholePosition(section);
     }
 ```
-###SectionBaseAdapter.java
+### SectionBaseAdapter.java
 这个类是属于PinnedHeaderListView开源项目的，在BaseAdapter的基础上进行了扩展，将顶部和具体内容的itemView分离，让用户自行去实现相应的View
-###entity
+### entity
 这里对放进ListView的数据结构做了一些约束<br>
-####PinLetterBaseEntity.java
+#### PinLetterBaseEntity.java
 所有的item的最外层数据继承该类
 ####PinLetterBaseItemEntity.java
 所有letter里面的子item数据继承该类
 
-##使用方式
-####在values.xml中新建att.xml
+## 使用方式
+#### 在values.xml中新建att.xml
    ```java
    <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -105,7 +105,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
     </declare-styleable>
 </resources>
 ```
-####在layout.xml文件中
+#### 在layout.xml文件中
    ```java
    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:pinletter="http://schemas.android.com/apk/res/com.ulex.apps.pinnedheaderletterlistview"
@@ -125,10 +125,10 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
 
 </RelativeLayout>
 ```
-####编写实体类
+#### 编写实体类
 继承PinLetterBaseEntity.java、PinLetterBaseItemEntity.java实现相应的实体类
 
-####继承[PinLetterBaseAdapter](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/PinLetterBaseAdapter.java)实现Adapter类
+#### 继承[PinLetterBaseAdapter](https://github.com/ulexzhong/PinnedHeaderLetterListView/blob/master/app/src/main/java/com/ulex/apps/pinnedheaderletterlistview/lib/PinLetterBaseAdapter.java)实现Adapter类
    ```java
   public class ContactsPinLetterListAdapter extends PinLetterBaseAdapter {
 
@@ -186,7 +186,7 @@ PinnedHeaderLetterListView提供一个类似通讯录列表的组件，具备两
         return convertView;
     }
 ```
- ####最后
+ #### 最后
  ```java
     List<ContactsPinLetterEntity> list = ContactsPinLetterModel.getContactsList();
         ContactsPinLetterListAdapter listAdapter = new ContactsPinLetterListAdapter(list);
